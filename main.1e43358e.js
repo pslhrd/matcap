@@ -40964,6 +40964,8 @@ loader.load(_model.default, function (gltf) {
   feuille.children[1].material = new THREE.MeshMatcapMaterial({
     matcap: matcapTexture
   });
+  arbre.children[0].castShadow = true;
+  feuille.children[1].castShadow = true;
   sphere.material = new THREE.MeshMatcapMaterial({
     matcap: matcapTexture2
   });
@@ -41003,13 +41005,24 @@ function sceneInit() {
 
   var clock = new THREE.Clock(); // LIGHTS
 
-  light = new THREE.PointLight(0xffffff, 1.3);
-  light.position.set(20, 30, 10);
+  light = new THREE.PointLight(0xffffff, 1, 50, 2);
+  light.position.set(0, 20, 0);
   amb = new THREE.AmbientLight(0xffffff, 4);
   scene.add(light);
   light.castShadow = true;
   light.shadow.mapSize.width = 2048;
-  light.shadow.mapSize.height = 2048; // HELPERS
+  light.shadow.mapSize.height = 2048; // GROUND
+
+  var geometry = new THREE.PlaneGeometry(300, 300);
+  var material = new THREE.MeshStandardMaterial({
+    color: 0x101010
+  });
+  var plane = new THREE.Mesh(geometry, material);
+  scene.add(plane);
+  plane.rotation.x = -Math.PI / 2;
+  plane.receiveShadow = true;
+  scene.fog = new THREE.Fog(0x101010, 60, 80);
+  scene.background = new THREE.Color(0x101010); // HELPERS
   // const sphereSize = 3
   // const pointLightHelper = new THREE.PointLightHelper(light, sphereSize)
   // scene.add(pointLightHelper)
@@ -41076,7 +41089,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59304" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50101" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
