@@ -49,6 +49,8 @@ loader.load(
 
     arbre.children[0].material = new THREE.MeshMatcapMaterial({matcap: matcapTexture2})
     feuille.children[1].material = new THREE.MeshMatcapMaterial({matcap: matcapTexture})
+    arbre.children[0].castShadow = true
+    feuille.children[1].castShadow = true
     sphere.material = new THREE.MeshMatcapMaterial({matcap: matcapTexture2})
     torus.material = new THREE.MeshMatcapMaterial({matcap: matcapTexture3})
     cylinder.material = new THREE.MeshMatcapMaterial({matcap: matcapTexture3})
@@ -73,6 +75,7 @@ function sceneInit() {
 
 
 
+
   // CAMERA
   camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight)
   camera.position.z = 10
@@ -85,14 +88,25 @@ function sceneInit() {
 
 
   // LIGHTS
-  light = new PointLight(0xffffff, 1.3)
-  light.position.set(20, 30 ,10)
+  light = new PointLight(0xffffff, 1, 50, 2)
+  light.position.set(0, 20 ,0)
   amb = new AmbientLight(0xffffff, 4)
   scene.add(light)
 
   light.castShadow = true
   light.shadow.mapSize.width = 2048
   light.shadow.mapSize.height = 2048
+
+
+  // GROUND
+  const geometry = new THREE.PlaneGeometry(300, 300)
+  const material = new THREE.MeshStandardMaterial({color:0x101010})
+  const plane = new THREE.Mesh(geometry, material)
+  scene.add(plane)
+  plane.rotation.x = - Math.PI / 2
+
+  scene.fog = new THREE.Fog(0x101010, 60, 80)
+  scene.background = new THREE.Color( 0x101010 );
 
 
   // HELPERS
