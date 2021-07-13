@@ -41020,7 +41020,6 @@ function sceneInit() {
   var plane = new THREE.Mesh(geometry, material);
   scene.add(plane);
   plane.rotation.x = -Math.PI / 2;
-  plane.receiveShadow = true;
   scene.fog = new THREE.Fog(0x101010, 60, 80);
   scene.background = new THREE.Color(0x101010); // HELPERS
   // const sphereSize = 3
@@ -41089,7 +41088,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50101" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64898" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
